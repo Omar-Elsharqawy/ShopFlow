@@ -1,0 +1,55 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "shop-flow-2026-om",
+          "appId": "1:499204046735:android:139fc9e243c2dd2fbf55fa",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "shop-flow-2026-om",
+          "configurations": {
+            "android": "1:499204046735:android:139fc9e243c2dd2fbf55fa",
+            "ios": "1:499204046735:ios:311e726c9923dcc2bf55fa",
+            "macos": "1:499204046735:ios:311e726c9923dcc2bf55fa",
+            "web": "1:499204046735:web:266f19a9b683b0c1bf55fa",
+            "windows": "1:499204046735:web:e6f23e795d9cbe4ebf55fa"
+          }
+        }
+      }
+    }
+  },
+  "functions": [
+    {
+      "codebase": "default",
+      "disallowLegacyRuntimeConfig": true,
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run lint",
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ],
+      "source": "functions"
+    },
+    {
+      "source": "shopflow",
+      "codebase": "shopflow",
+      "disallowLegacyRuntimeConfig": true,
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ]
+    }
+  ]
+}

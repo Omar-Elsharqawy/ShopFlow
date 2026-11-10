@@ -1,0 +1,20 @@
+{
+  "name": "shopflow-worker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "firebase-auth-cloudflare-workers": "^2.0.6",
+    "google-auth-library": "^11.3.3"
+  },
+  "devDependencies": {
+    "wrangler": "^4.157.0"
+  }
+}
