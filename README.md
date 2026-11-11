@@ -75,9 +75,29 @@ The order-processing flow includes:
 
 Firebase Admin credentials are managed through server-side environment secrets and are not included in the repository.
 
+
 ## 📱 Screenshots
 
-Application screenshots will be added soon.
+### Customer App
+
+| Login | Register | Products |
+|---|---|---|
+| <img src="screenshots/login.png" width="220"> | <img src="screenshots/register.png" width="220"> | <img src="screenshots/products.png" width="220"> |
+
+| Product Details | Cart | Checkout |
+|---|---|---|
+| <img src="screenshots/product_details.png" width="220"> | <img src="screenshots/cart.png" width="220"> | <img src="screenshots/checkout.png" width="220"> |
+
+| My Orders | Order Details |
+|---|---|
+| <img src="screenshots/my_orders.png" width="220"> | <img src="screenshots/order_details.png" width="220"> |
+
+### Admin Panel
+
+| Dashboard | Manage Products | Manage Orders |
+|---|---|---|
+| <img src="screenshots/admin_dashboard.png" width="220"> | <img src="screenshots/admin_products.png" width="220"> | <img src="screenshots/admin_orders.png" width="220"> |
+
 
 ## ⚙️ Getting Started
 
