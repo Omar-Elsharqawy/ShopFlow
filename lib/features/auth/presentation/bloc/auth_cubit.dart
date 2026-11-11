@@ -7,6 +7,8 @@ import '../../domain/usecases/login_user.dart';
 import '../../domain/usecases/logout_user.dart';
 import '../../domain/usecases/register_user.dart';
 import '../../domain/usecases/reset_password.dart';
+
+import '../cubit/cart_cubit.dart';
 import 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -15,6 +17,7 @@ class AuthCubit extends Cubit<AuthState> {
   final LogoutUser logoutUser;
   final ResetPassword resetPasswordUseCase;
   final GetCurrentUser getCurrentUser;
+  final CartCubit cartCubit;
 
   AuthCubit({
     required this.registerUser,
@@ -22,6 +25,7 @@ class AuthCubit extends Cubit<AuthState> {
     required this.logoutUser,
     required this.resetPasswordUseCase,
     required this.getCurrentUser,
+    required this.cartCubit,
   }) : super(AuthInitial());
 
   Future<void> register({
@@ -37,6 +41,8 @@ class AuthCubit extends Cubit<AuthState> {
         password: password,
         name: name,
       );
+
+      cartCubit.clearCart();
 
       emit(AuthAuthenticated(user));
     } catch (e) {
@@ -56,6 +62,8 @@ class AuthCubit extends Cubit<AuthState> {
         password: password,
       );
 
+      cartCubit.clearCart();
+
       emit(AuthAuthenticated(user));
     } catch (e) {
       emit(AuthError(e.toString()));
@@ -67,6 +75,8 @@ class AuthCubit extends Cubit<AuthState> {
 
     try {
       await logoutUser();
+
+      cartCubit.clearCart();
 
       emit(AuthUnauthenticated());
     } catch (e) {
@@ -99,6 +109,7 @@ class AuthCubit extends Cubit<AuthState> {
       if (user != null) {
         emit(AuthAuthenticated(user));
       } else {
+        cartCubit.clearCart();
         emit(AuthUnauthenticated());
       }
     } catch (e) {

@@ -1,17 +1,22 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 
-// Auth
+// Data Sources
 import '../features/auth/data/datasources/auth_remote_data_source.dart';
 import '../features/auth/data/datasources/order_remote_data_source.dart';
 import '../features/auth/data/datasources/product_remote_data_source.dart';
+
+// Repositories
 import '../features/auth/data/repositories/auth_repository_impl.dart';
 import '../features/auth/domain/repositories/auth_repository.dart';
 import '../features/auth/domain/repositories/order_repository.dart';
 import '../features/auth/domain/repositories/order_repository_impl.dart';
 import '../features/auth/domain/repositories/product_repository.dart';
 import '../features/auth/domain/repositories/product_repository_impl.dart';
+
+// Use Cases
 import '../features/auth/domain/usecases/create_order.dart';
 import '../features/auth/domain/usecases/get_all_orders.dart';
 import '../features/auth/domain/usecases/get_current_user.dart';
@@ -22,20 +27,31 @@ import '../features/auth/domain/usecases/logout_user.dart';
 import '../features/auth/domain/usecases/register_user.dart';
 import '../features/auth/domain/usecases/reset_password.dart';
 import '../features/auth/domain/usecases/update_order_status.dart';
+
+// Cubits
 import '../features/auth/presentation/bloc/auth_cubit.dart';
 import '../features/auth/presentation/cubit/cart_cubit.dart';
 import '../features/auth/presentation/cubit/order_cubit.dart';
 import '../features/auth/presentation/cubit/products_cubit.dart';
+
 final sl = GetIt.instance;
 
 Future<void> setupDependencies() async {
-  // Firebase
+  // ==================== FIREBASE ====================
+
   sl.registerLazySingleton<FirebaseAuth>(
         () => FirebaseAuth.instance,
   );
 
   sl.registerLazySingleton<FirebaseFirestore>(
         () => FirebaseFirestore.instance,
+  );
+
+  // ==================== CART ====================
+
+  // Shared cart instance across the app.
+  sl.registerLazySingleton<CartCubit>(
+        () => CartCubit(),
   );
 
   // ==================== AUTH ====================
@@ -80,6 +96,7 @@ Future<void> setupDependencies() async {
       logoutUser: sl<LogoutUser>(),
       resetPasswordUseCase: sl<ResetPassword>(),
       getCurrentUser: sl<GetCurrentUser>(),
+      cartCubit: sl<CartCubit>(),
     ),
   );
 
@@ -105,12 +122,6 @@ Future<void> setupDependencies() async {
         () => ProductsCubit(sl<GetProducts>()),
   );
 
-  // ==================== CART ====================
-
-  sl.registerLazySingleton<CartCubit>(
-        () => CartCubit(),
-  );
-
   // ==================== ORDERS ====================
 
   sl.registerLazySingleton<OrderRemoteDataSource>(
@@ -134,6 +145,10 @@ Future<void> setupDependencies() async {
         () => GetMyOrders(sl<OrderRepository>()),
   );
 
+  sl.registerLazySingleton<GetAllOrders>(
+        () => GetAllOrders(sl<OrderRepository>()),
+  );
+
   sl.registerLazySingleton<UpdateOrderStatus>(
         () => UpdateOrderStatus(sl<OrderRepository>()),
   );
@@ -145,8 +160,5 @@ Future<void> setupDependencies() async {
       getAllOrders: sl<GetAllOrders>(),
       updateOrderStatus: sl<UpdateOrderStatus>(),
     ),
-  );
-  sl.registerLazySingleton<GetAllOrders>(
-        () => GetAllOrders(sl<OrderRepository>()),
   );
 }
